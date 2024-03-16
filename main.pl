@@ -21,3 +21,14 @@ append([H|T], L2, [H|NT]):-
 getItemsInOrderById(CustomerName,OrderId,Items):-
     customer(CustomerId , CustomerName),
     order(CustomerId,OrderId,Items).
+
+calcPriceOfOrder(CustomerName, OrderId, TotalPrice):-
+    customer(CustomerId, CustomerName),
+    order(CustomerId, OrderId, Items),
+    get_sum(Items, 0, TotalPrice).
+
+get_sum([], TotalPrice, TotalPrice).
+get_sum([H|T], CurrentTotal, TotalPrice):-
+    item(H, _, Price),
+    NewTotal is CurrentTotal + Price,
+    get_sum(T, NewTotal, TotalPrice).
