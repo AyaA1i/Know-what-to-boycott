@@ -1,12 +1,11 @@
 :- consult('data.pl').
 
+% this function used to get the customer id and call find order
 list_orders(CustomerName, Orders) :-
     customer(CustomerId, CustomerName),
-    collect_orders(CustomerId, [], Orders).
+    find_order(CustomerId, 1, [], Orders).
 
-collect_orders(CustomerId, AccOrders, Orders) :-
-    find_order(CustomerId, 1, AccOrders, Orders).
-
+% get the customer order and call append to add it to the list
 find_order(CustomerId, OrderId, AccOrders, Orders) :-
     order(CustomerId, OrderId, Items),
     append(AccOrders, [order(CustomerId, OrderId, Items)], NewAccOrders),
