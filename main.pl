@@ -17,3 +17,7 @@ find_order(_, _, Orders, Orders).
 append([], L, L).
 append([H|T], L2, [H|NT]):-
   append(T, L2, NT).
+
+getItemsInOrderById(CustomerName,OrderId,Items):-
+    customer(CustomerId , CustomerName),
+    order(CustomerId,OrderId,Items).
