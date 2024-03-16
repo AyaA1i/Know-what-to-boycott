@@ -1,5 +1,6 @@
 :- consult('data.pl').
 
+%-----------------------------------------------1
 % this function used to get the customer id and call find order
 list_orders(CustomerName, Orders) :-
     customer(CustomerId, CustomerName),
@@ -17,11 +18,12 @@ find_order(_, _, Orders, Orders).
 append([], L, L).
 append([H|T], L2, [H|NT]):-
   append(T, L2, NT).
-
+%-----------------------------------------------------3
 getItemsInOrderById(CustomerName,OrderId,Items):-
     customer(CustomerId , CustomerName),
     order(CustomerId,OrderId,Items).
 
+%------------------------------------------------------5
 calcPriceOfOrder(CustomerName, OrderId, TotalPrice):-
     customer(CustomerId, CustomerName),
     order(CustomerId, OrderId, Items),
