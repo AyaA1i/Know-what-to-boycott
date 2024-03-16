@@ -34,3 +34,22 @@ get_sum([H|T], CurrentTotal, TotalPrice):-
     item(H, _, Price),
     NewTotal is CurrentTotal + Price,
     get_sum(T, NewTotal, TotalPrice).
+
+%-------------------------------------------------------8
+checkboycott([], NewList, NewList).
+
+checkboycott([H|T], CurrentItems, NewList) :-
+    item(H, Company, _),
+    \+ boycott_company(Company, _), % Check if the company is not boycotted
+    append(CurrentItems, [H], NewItems),
+    checkboycott(T, NewItems, NewList).
+
+checkboycott([_|T], CurrentItems, NewList) :-
+    checkboycott(T, CurrentItems, NewList).
+
+
+removeBoycottItemsFromAnOrder(CustomerName, OrderId, NewList) :-
+    customer(CustomerId, CustomerName),
+    order(CustomerId, OrderId, Items),
+    checkboycott(Items, [], NewList),
+    !.
