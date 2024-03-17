@@ -27,6 +27,7 @@ order(108,1,[juhayna_juice, flour_1k, chicken_1k, meat_1k]).
 order(108,2,[sugar_1k, strawberry_1k, strawberry_1k]).
 order(109,1,[pampers_size1_60p, johnsons_baby_shampoo_200ml, topvalue_laundry_detergent_4k, downy_1L, dove_shampoo_350ml]).
 
+:- dynamic item/3.
 item(ariel_4k, 'Procter and Gamble', 285).
 item(tide_4k, 'Procter and Gamble', 225).
 item(persil_4k, 'Henkel', 200).
@@ -101,6 +102,7 @@ item(flour_1k, 'Egypt', 30).
 item(rice_1k, 'Egypt', 30).
 item(sugar_1k, 'Egypt', 27).
 
+:- dynamic alternative/2.
 alternative(ariel_4k, topvalue_laundry_detergent_4k).
 alternative(tide_4k, topvalue_laundry_detergent_4k).
 alternative(persil_4k, topvalue_laundry_detergent_4k).
@@ -146,6 +148,7 @@ alternative(aquafina, puvana).
 alternative(aquafina, siwa).
 alternative(aquafina, safi).
 
+:- dynamic boycott_company/2.
 boycott_company('The Coca-Cola Company', 'Coca-Cola israel: owns farms in the illegal israeli settlements of Shadmot Mechola in the Jordan Valley and a plant in the industrial zone of Katzerin in the occupied Golan Heights').
 boycott_company('PepsiCo', 'PepsiCo purchased the israeli company SodaStream in August 2018. SodaStream has long been a BDS target due to their operation of factories on stolen land and their racial discrimination against Palestinian workers. Pepsi also owns 50% of Sabra, with the other 50% being owned by israeli food company Strauss').
 boycott_company('Nestle', 'Nestle is 100% owned by swiss. Nestle began investing in israel in 1995 by buying 10% of israeli food maker Osem Investments, increasing its ownership to 50.1% two years later giving it the controlling share and now owns a 53.8 percent stake in Osem Swiss food giant Nestle will set up a global research and development center for snack foods in Sderot, a town in israel Negev desert, the Maariv newspaper reported on Sunday.').
