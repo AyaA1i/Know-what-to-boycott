@@ -84,6 +84,9 @@ replaceBoycottItemsFromAnOrder(CustomerName, OrderId, AltList):-
     replaceBoycottItems(OldList, AltList).
 
 %-----------------------------------------------12
+:- dynamic item/3.
+:- dynamic alternative/2.
+:- dynamic boycott_company/2.
 			  %--item--%
 addItem(ItemName, ItemCompany, ItemPrice):-
 	assertz(item(ItemName, ItemCompany, ItemPrice)).
