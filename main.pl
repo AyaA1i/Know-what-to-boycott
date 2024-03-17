@@ -53,3 +53,50 @@ removeBoycottItemsFromAnOrder(CustomerName, OrderId, NewList) :-
     order(CustomerId, OrderId, Items),
     checkboycott(Items, [], NewList),
     !.
+
+%-----------------------------------------------6
+isBoycott(ItemName):-
+	item(ItemName, CompanyName, _),
+	boycott_company(CompanyName, _).
+
+%-----------------------------------------------7
+whyToBoycott(CompanyName, Justification):-
+    boycott_company(CompanyName, Justification).
+
+whyToBoycott(ItemName, Justification):-
+	item(ItemName, CompanyName, _),
+    whyToBoycott(CompanyName, Justification).
+
+%-----------------------------------------------9
+replaceBoycottItems([], []).
+replaceBoycottItems([NotBoycottItem|RestOfItems], [NotBoycottItem|RestOfAltItems]) :-
+    \+ isBoycott(NotBoycottItem),
+    replaceBoycottItems(RestOfItems, RestOfAltItems).
+replaceBoycottItems([BoycottItem|RestOfItems], [AltItem|RestOfAltItems]) :-
+    isBoycott(BoycottItem),
+    alternative(BoycottItem, AltItem),
+    !,
+    replaceBoycottItems(RestOfItems, RestOfAltItems).
+
+replaceBoycottItemsFromAnOrder(CustomerName, OrderId, AltList):-
+    customer(CustomerId, CustomerName),
+    order(CustomerId, OrderId, OldList),
+    replaceBoycottItems(OldList, AltList).
+
+%-----------------------------------------------12
+			  %--item--%
+addItem(ItemName, ItemCompany, ItemPrice):-
+	assertz(item(ItemName, ItemCompany, ItemPrice)).
+removeItem(ItemName, ItemCompany, ItemPrice):-
+	retract(item(ItemName, ItemCompany, ItemPrice)).
+		    %--alternative--%
+addAlternative(BoycottItem, AltItem):-
+	assertz(alternative(BoycottItem, AltItem)).
+removeAlternative(BoycottItem, AltItem):-
+	retract(alternative(BoycottItem,AltItem)).
+            %--boycott_company--%
+addBoycottCompany(CompanyName, Justification):-
+	assertz(boycott_company(CompanyName, Justification)).
+removeBoycottCompany(CompanyName, Justification):-
+	retract(boycott_company(CompanyName, Justification)).
+
