@@ -14,14 +14,44 @@ find_order(CustomerId, OrderId, AccOrders, Orders) :-
     find_order(CustomerId, NextOrderId, NewAccOrders, Orders).
 
 find_order(_, _, Orders, Orders).
-
 append([], L, L).
 append([H|T], L2, [H|NT]):-
   append(T, L2, NT).
+
+%-----------------------------------------------2
+% Get the number of orders of a specific customer given customer id.
+countOrdersOfCustomer(CustomerName, Count) :-
+    customer(CustomerId, CustomerName),
+    countOrders(CustomerId, [], 0, Count).
+
+countOrders(CustomerId, SeenOrders, Accumulator, Count) :-
+    order(CustomerId, OrderId, _),
+    \+ include(OrderId, SeenOrders), 
+    Accumulator2 is Accumulator + 1,
+    countOrders(CustomerId, [OrderId|SeenOrders], Accumulator2, Count).
+
+countOrders(_, _, Count, Count).
+
+include(X, [X|_]).
+include(X, [_|Tail]):-
+    include(X, Tail).
+
 %-----------------------------------------------------3
 getItemsInOrderById(CustomerName,OrderId,Items):-
     customer(CustomerId , CustomerName),
     order(CustomerId,OrderId,Items).
+
+%------------------------------------------------------4
+% Get the num of items in a specific customer order given customerName and order id.
+getNumOfItems(CustomerName, OrderId, Count) :-
+    customer(CustomerId, CustomerName),
+    order(CustomerId, OrderId, List),
+    countItems(List, Count).
+
+countItems([], 0).
+countItems([_|T], Count) :-
+    countItems(T, Cnt),
+    Count is Cnt + 1.
 
 %------------------------------------------------------5
 calcPriceOfOrder(CustomerName, OrderId, TotalPrice):-
@@ -102,4 +132,3 @@ addBoycottCompany(CompanyName, Justification):-
 	assertz(boycott_company(CompanyName, Justification)).
 removeBoycottCompany(CompanyName, Justification):-
 	retract(boycott_company(CompanyName, Justification)).
-
