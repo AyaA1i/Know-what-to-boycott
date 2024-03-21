@@ -113,6 +113,24 @@ replaceBoycottItemsFromAnOrder(CustomerName, OrderId, AltList):-
     order(CustomerId, OrderId, OldList),
     replaceBoycottItems(OldList, AltList).
 
+%-----------------------------------------------10
+calcPriceAfterReplacingBoycottItemsFromAnOrder(CustomerName, OrderId, NewList, TotalPrice) :-
+    replaceBoycottItemsFromAnOrder(CustomerName, OrderId, NewList),
+    calcTotalPrice(NewList, TotalPrice).
+
+calcTotalPrice([], 0).
+calcTotalPrice([Item|Rest], TotalPrice) :-
+    calcTotalPrice(Rest, RemainingPrice),
+    item(Item, _, Price),
+    TotalPrice is RemainingPrice + Price.
+
+%-----------------------------------------------11
+getTheDifferenceInPriceBetweenItemAndAlternative(Item, Alt, DiffPrice) :-
+    alternative(Item, Alt),
+    item(Alt, _, NewPrice),
+    item(Item, _, OldPrice),
+    DiffPrice is OldPrice - NewPrice.
+
 %-----------------------------------------------12
 :- dynamic item/3.
 :- dynamic alternative/2.
